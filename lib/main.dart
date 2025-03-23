@@ -86,14 +86,14 @@ class PlanetCard extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(
                 10,
-              ), // Apply rounded corners to the image
+              ), 
               child: Image.network(
                 imageUrl,
                 height: 150,
                 width:
                     double
-                        .infinity, // Ensure the image fills the container width
-                fit: BoxFit.cover, // Ensure proper image scaling
+                        .infinity, 
+                fit: BoxFit.cover, 
               ),
             ),
             const SizedBox(height: 5),
