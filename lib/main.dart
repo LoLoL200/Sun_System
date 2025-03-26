@@ -10,6 +10,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Планети Сонячної системи',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -74,47 +75,98 @@ class PlanetCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Container(
-        margin: const EdgeInsets.all(8),
-        padding: const EdgeInsets.all(6),
-        decoration: BoxDecoration(
-          color: Colors.grey[700],
-          borderRadius: BorderRadius.circular(10),
+      child: IconButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder:
+                  (context) => PlanetDetailPage(name: name, imageUrl: imageUrl),
+            ),
+          );
+        },
+        icon: Container(
+          margin: const EdgeInsets.all(8),
+          padding: const EdgeInsets.all(6),
+          decoration: BoxDecoration(
+            color: Colors.grey[700],
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Column(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.network(
+                  imageUrl,
+                  height: 150,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              const SizedBox(height: 5),
+              Text(
+                name,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.amberAccent,
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.wb_sunny, color: Colors.amber, size: 16),
+                  const SizedBox(width: 5),
+                  Text(
+                    distance,
+                    style: const TextStyle(fontSize: 14, color: Colors.white70),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
+      ),
+    );
+  }
+}
+
+class PlanetDetailPage extends StatelessWidget {
+  final String name;
+  final String imageUrl;
+
+  const PlanetDetailPage({
+    super.key,
+    required this.name,
+    required this.imageUrl,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text(name), backgroundColor: Colors.deepPurple),
+      backgroundColor: Colors.black87,
+      body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(
-                10,
-              ), // Apply rounded corners to the image
+              borderRadius: BorderRadius.circular(10),
               child: Image.network(
                 imageUrl,
-                height: 150,
-                width:
-                    double
-                        .infinity, // Ensure the image fills the container width
-                fit: BoxFit.cover, // Ensure proper image scaling
+                height: 300,
+                width: 300,
+                fit: BoxFit.cover,
               ),
             ),
-            const SizedBox(height: 5),
+            const SizedBox(height: 20),
             Text(
               name,
               style: const TextStyle(
-                fontSize: 18,
+                fontSize: 24,
                 fontWeight: FontWeight.bold,
                 color: Colors.amberAccent,
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(Icons.wb_sunny, color: Colors.amber, size: 16),
-                const SizedBox(width: 5),
-                Text(
-                  distance,
-                  style: const TextStyle(fontSize: 14, color: Colors.white70),
-                ),
-              ],
             ),
           ],
         ),
@@ -223,7 +275,7 @@ class StructuralWidgetPage extends StatelessWidget {
   static Widget _text() {
     return const Text(
       "Сонячна система",
-      style: TextStyle(color: Color.fromARGB(181, 164, 223, 4), fontSize: 24),
+      style: TextStyle(color: Colors.amber, fontSize: 24),
     );
   }
 
@@ -231,7 +283,7 @@ class StructuralWidgetPage extends StatelessWidget {
     return const Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.0),
       child: Text(
-        "Сонячна система включає центральну зорю Сонце і планети, що обертаються навколо нього...",
+        "Сонячна система включає Сонце і планети, що обертаються навколо нього...",
         textAlign: TextAlign.center,
         style: TextStyle(color: Colors.white, fontSize: 16),
       ),
